@@ -1,6 +1,7 @@
 import express, { Express } from 'express'
 import cors from 'cors'
 import router from '../routes/user.routes'
+import { dbConnection } from '../db/config'
 
 export default class Server {
   app: Express
@@ -12,8 +13,13 @@ export default class Server {
     this.port = process.env.PORT ?? '5000'
     this.usersPath = '/api/users'
 
+    void this.connectDB()
     this.middlewares()
     this.routes()
+  }
+
+  async connectDB (): Promise<void> {
+    await dbConnection()
   }
 
   middlewares (): void {
