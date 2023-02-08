@@ -6,6 +6,7 @@
   "author": "Brandon Rojas",
   "scripts": {
     "build": "tsc && node ./dist/index.js",
+    "start": "tsc && node ./dist/index.js",
     "dev": "tsnd --respawn --transpile-only ./src/index.ts"
   },
   "dependencies": {
