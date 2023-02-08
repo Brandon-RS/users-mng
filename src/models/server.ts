@@ -1,4 +1,6 @@
 import express, { Express } from 'express'
+import cors from 'cors'
+import router from '../routes/user.routes'
 
 export default class Server {
   app: Express
@@ -15,16 +17,13 @@ export default class Server {
   }
 
   middlewares (): void {
+    this.app.use(cors())
     this.app.use(express.static('public'))
     this.app.use(express.json())
   }
 
   routes (): void {
-    this.app.get(this.usersPath, (req, res) => {
-      res.json({
-        msg: 'Home Page'
-      })
-    })
+    this.app.use(this.usersPath, router)
   }
 
   listen (): void {
