@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Router } from 'express'
 import { check } from 'express-validator'
-import { userDelete, userGet, userPost, userPut } from '../controllers/user.controller'
+
+import { validateJWT } from '../middlewares/validate.jwt'
 import { validateFields } from '../middlewares/validate.fields'
+import { hasRole } from '../middlewares/validate.role'
+
 import { emailExists, isValidRole, isRegisteredID } from '../helpers/db.validators'
+import { userDelete, userGet, userPost, userPut } from '../controllers/user.controller'
 
 const router = Router()
 
@@ -30,6 +34,9 @@ router.put('/:id', [
 ], userPut)
 
 router.delete('/:id', [
+  validateJWT,
+  // isAdminRole,
+  hasRole('ADMIN', 'SALES'),
   check('id', 'Invalid ID').isMongoId(),
   check('id').custom(isRegisteredID),
   validateFields

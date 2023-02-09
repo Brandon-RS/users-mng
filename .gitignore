@@ -1,6 +1,5 @@
 node_modules
 dist
 .vscode
-.rest_api
 
 .env
