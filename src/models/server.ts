@@ -1,17 +1,25 @@
 import express, { Express } from 'express'
 import cors from 'cors'
+<<<<<<< HEAD
 import router from '../routes/user.routes'
 import { dbConnection } from '../db/config'
+=======
+import { dbConnection } from '../db/config'
+import routerUsers from '../routes/user.routes'
+import routerAuth from '../routes/auth.routes'
+>>>>>>> development
 
 export default class Server {
   app: Express
   port: string
   usersPath: string
+  authPath: string
 
   constructor () {
     this.app = express()
     this.port = process.env.PORT ?? '5000'
     this.usersPath = '/api/users'
+    this.authPath = '/api/auth'
 
     void this.connectDB()
     this.middlewares()
@@ -29,7 +37,8 @@ export default class Server {
   }
 
   routes (): void {
-    this.app.use(this.usersPath, router)
+    this.app.use(this.authPath, routerAuth)
+    this.app.use(this.usersPath, routerUsers)
   }
 
   listen (): void {

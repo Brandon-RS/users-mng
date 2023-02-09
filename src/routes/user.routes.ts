@@ -1,6 +1,15 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Router } from 'express'
 import { check } from 'express-validator'
+<<<<<<< HEAD
+=======
+
+import { validateJWT } from '../middlewares/validate.jwt'
+import { validateFields } from '../middlewares/validate.fields'
+import { hasRole } from '../middlewares/validate.role'
+
+import { emailExists, isValidRole, isRegisteredID } from '../helpers/db.validators'
+>>>>>>> development
 import { userDelete, userGet, userPost, userPut } from '../controllers/user.controller'
 import { validateFields } from '../middlewares/validate.fields'
 import { emailExists, isValidRole, isRegisteredID } from '../helpers/db.validators'
@@ -30,6 +39,12 @@ router.put('/:id', [
 ], userPut)
 
 router.delete('/:id', [
+<<<<<<< HEAD
+=======
+  validateJWT,
+  // isAdminRole,
+  hasRole('ADMIN', 'SALES'),
+>>>>>>> development
   check('id', 'Invalid ID').isMongoId(),
   check('id').custom(isRegisteredID),
   validateFields
