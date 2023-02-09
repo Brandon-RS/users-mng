@@ -1,13 +1,8 @@
 import express, { Express } from 'express'
 import cors from 'cors'
-<<<<<<< HEAD
-import router from '../routes/user.routes'
-import { dbConnection } from '../db/config'
-=======
 import { dbConnection } from '../db/config'
 import routerUsers from '../routes/user.routes'
 import routerAuth from '../routes/auth.routes'
->>>>>>> development
 
 export default class Server {
   app: Express

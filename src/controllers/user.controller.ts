@@ -50,8 +50,6 @@ export const userDelete = async (req: Request, res: Response): Promise<void> => 
   const { id } = req.params
   const user = await User.findByIdAndUpdate(id, { status: false })
 
-  const user = await User.findByIdAndUpdate(id, { status: false })
-
   res.json({
     user
   })
