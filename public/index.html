@@ -19,6 +19,38 @@
     enim qui sunt ullamco labore ipsum labore. Adipisicing exercitation cupidatat sint excepteur
     exercitation eiusmod et non.
   </p>
+
+  <div id="g_id_onload"
+    data-client_id="105310104298-snk6gupmvem6tkmc6fvmo2a0crbr3fg6.apps.googleusercontent.com"
+    data-auto_prompt="false"
+    data-callback="handleCredentialResponse">
+  </div>
+  <div class="g_id_signin"
+    data-type="standard"
+    data-size="large"
+    data-theme="outline"
+    data-text="sign_in_with"
+    data-shape="rectangular"
+    data-logo_alignment="left">
+  </div>
+
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script>
+    function handleCredentialResponse(response) {
+      const body = { idToken: response.credential }
+
+      fetch('http://localhost:3000/api/auth/google', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      })
+        .then(resp => resp.json())
+        // .then(resp => console.log(resp))
+        .catch(console.warn)
+    }
+  </script>
 </body>
 
 </html>
