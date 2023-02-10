@@ -37,8 +37,31 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
 export const googleSingIn = async (req: Request, res: Response): Promise<any> => {
   const { idToken } = req.body
   try {
-    const googleUser = await googleVerify(idToken)
-    res.json({ msg: 'All ok', googleUser })
+    const { name, email, picture } = await googleVerify(idToken)
+    let user = await User.findOne({ email })
+
+    if (user === null || user === undefined) {
+      const data = {
+        name,
+        email,
+        password: ':p',
+        image: picture,
+        role: 'USER',
+        google: true
+      }
+      user = new User(data)
+      await user.save()
+    }
+
+    if (!user.status) {
+      return res.status(401).json({
+        msg: 'User blocked'
+      })
+    }
+
+    const token = await generateJWT(user.id)
+
+    res.json({ user, token })
   } catch (error) {
     console.log(error)
     res.status(400).json({
